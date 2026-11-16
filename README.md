@@ -11,7 +11,7 @@
 ![Tests](https://img.shields.io/badge/tests-109%20aprobados-19F5A0?style=flat-square&labelColor=0B1220)
 ![Estado](https://img.shields.io/badge/estado-prototipo-FFB020?style=flat-square&labelColor=0B1220)
 
-[Documentación](docs/README.md) · [Cómo levantarlo](#cómo-levantarlo) · [Modo ciudadano](#modo-ciudadano) · [Arquitectura](#arquitectura) · [Equipo](#equipo)
+[Documentación](docs/README.md) · [Cómo levantarlo](#cómo-levantarlo) · [Modo ciudadano](#modo-ciudadano) · [Arquitectura](#arquitectura) · [Autoría](#autoría)
 
 </div>
 
@@ -227,23 +227,9 @@ Toda la documentación se lee directamente en GitHub, por páginas:
 
 ---
 
-## Equipo
+## Autoría
 
-| N.º | Integrante |
-|---|---|
-| 1 | Carolina Lobo |
-| 2 | Sabrina De Marco |
-| 3 | Maximiliano Chaparro |
-| 4 | Maximo Casanovas |
-| 5 | Melina Cullari |
-
-| # | Rol | Responsabilidad principal |
-|---|---|---|
-| I1 | Product Owner y documentador QA | Documentación, criterios de aceptación, plan de pruebas |
-| I2 | Desarrollo frontend | React, mapa de ciudad, UI de alertas, i18n |
-| I3 | Desarrollo backend core | Node.js, patrones de diseño, API REST |
-| I4 | Seguridad y base de datos | PostgreSQL, AES/BCrypt, DVH/DVV, backups |
-| I5 | Integración full-stack y WebSockets | socket.io, integración, CI/CD, despliegue |
+Proyecto de **Carolina Lobo**.
 
 ---
 
