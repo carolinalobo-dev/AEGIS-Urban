@@ -15,7 +15,7 @@
 
 </div>
 
-**Proyecto de Carolina Lobo** · Argentina · 2026
+Argentina · 2026
 **Estado:** prototipo en desarrollo. No reemplaza a los organismos oficiales: ante una emergencia real llamá al **911**, **100** (bomberos) o **103** (Defensa Civil).
 
 ---
