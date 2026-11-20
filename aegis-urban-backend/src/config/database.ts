@@ -31,7 +31,10 @@ export class DatabaseConnection {
       max:                     env.db.poolMax,
       idleTimeoutMillis:       env.db.idleTimeoutMs,
       connectionTimeoutMillis: env.db.connTimeoutMs,
-      ssl: env.NODE_ENV === "production" ? { rejectUnauthorized: true } : false,
+      // DB_SSL=false para una base en red privada (p. ej. la URL interna de Render); no-verify acepta certificados autofirmados.
+      ssl: process.env.DB_SSL === "false" ? false
+        : process.env.DB_SSL === "no-verify" ? { rejectUnauthorized: false }
+        : env.NODE_ENV === "production" ? { rejectUnauthorized: true } : false,
     });
 
     this.pool.on("error", (err) => {

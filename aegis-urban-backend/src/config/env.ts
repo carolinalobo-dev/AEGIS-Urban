@@ -47,7 +47,7 @@ if (process.env.VERIFICACION_EMAIL_REAL === "true") {
 export const env = {
   NODE_ENV:     process.env.NODE_ENV      ?? "development",
   PORT:         parseInt(process.env.PORT ?? "3001", 10),
-  FRONTEND_URL: process.env.FRONTEND_URL  ?? "http://localhost:5173",
+  FRONTEND_URL: process.env.FRONTEND_URL  ?? process.env.RENDER_EXTERNAL_URL ?? "http://localhost:5173",
 
   db: {
     host:               process.env.DB_HOST!,
