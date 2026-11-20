@@ -90,6 +90,11 @@ describe("Seguridad — cabeceras y configuración", () => {
     expect(r.headers.get("strict-transport-security")).toBeTruthy();
   });
 
+  test("envía el origen en el Referer (OpenStreetMap bloquea los mapas sin él) pero no la ruta completa", async () => {
+    const r = await llamar("GET", "/api/health");
+    expect(r.headers.get("referrer-policy")).toBe("strict-origin-when-cross-origin");
+  });
+
   test("CORS no refleja orígenes ajenos", async () => {
     const r = await llamar("GET", "/api/health", { headers: { Origin: "http://sitio-malicioso.example" } });
     expect(r.headers.get("access-control-allow-origin")).not.toBe("http://sitio-malicioso.example");
