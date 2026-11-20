@@ -1,0 +1,39 @@
+# Blueprint de Render: crea la base PostgreSQL y el servicio web (API + web en un solo servicio).
+# Uso: Render → New → Blueprint → elegir este repositorio.
+databases:
+  - name: aegis-db
+    databaseName: aegis
+    user: aegis
+    plan: free
+    postgresMajorVersion: "16"
+
+services:
+  - type: web
+    name: aegis-urban
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: DB_HOST
+        fromDatabase: { name: aegis-db, property: host }
+      - key: DB_PORT
+        fromDatabase: { name: aegis-db, property: port }
+      - key: DB_NAME
+        fromDatabase: { name: aegis-db, property: database }
+      - key: DB_USER
+        fromDatabase: { name: aegis-db, property: user }
+      - key: DB_PASSWORD
+        fromDatabase: { name: aegis-db, property: password }
+      - key: DB_SSL
+        value: "false"            # conexión por la red privada de Render
+      - key: JWT_SECRET
+        generateValue: true       # Render genera un secreto aleatorio fuerte
+      - key: ADMIN_PASSWORD
+        sync: false               # la escribís vos en el panel de Render (contraseña del usuario admin)
+      - key: CARGAR_USUARIOS_DEMO
+        value: "true"             # crea defensa / transito / auditor para la demo (contraseña del seed)
+      - key: VERIFICACION_EMAIL_REAL
+        value: "false"            # los códigos de verificación se muestran en pantalla
+      - key: BACKUP_AUTOMATICO
+        value: "false"

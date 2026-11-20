@@ -231,6 +231,7 @@ Toda la documentación se lee directamente en GitHub, por páginas:
 | [Manual de usuario](docs/04-manual-de-usuario.md) | Guía por rol (también en la app, `/ayuda`) |
 | [Pruebas y rendimiento](docs/05-pruebas-y-rendimiento.md) | Unitarias, integración, seguridad, carga y CI, con resultados |
 | [Operación de la base de datos](docs/06-base-de-datos.md) | Respaldo, restauración, particiones, integridad y cifrado |
+| [Despliegue en Render](docs/DESPLIEGUE-RENDER.md) | Guía simple para publicar la app |
 
 ---
 

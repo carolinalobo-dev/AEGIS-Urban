@@ -5,6 +5,8 @@ import express, { Application, Request, Response, NextFunction } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
+import path from "path";
+import fs from "fs";
 import morgan from "morgan";
 import { createServer } from "http";
 import { env } from "./config/env";
@@ -30,7 +32,21 @@ const app: Application = express();
 const servidorHttp = createServer(app);
 
 // ── Middlewares globales ──────────────────────────────────────────────────────
-app.use(helmet());
+// El frontend se sirve desde este mismo servidor en producción: la CSP deja pasar lo que usa la web
+// (mapa de OpenStreetMap, tipografías de Google y WebSocket al mismo origen).
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc:  ["'self'"],
+      styleSrc:   ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc:    ["'self'", "https://fonts.gstatic.com", "data:"],
+      imgSrc:     ["'self'", "data:", "blob:", "https:"],
+      connectSrc: ["'self'", "ws:", "wss:"],
+      workerSrc:  ["'self'", "blob:"],
+    },
+  },
+}));
 // Respuestas JSON comprimidas con gzip: menos bytes por petición (los WebSockets no se ven afectados).
 app.use(compression());
 app.use(cors({
@@ -65,6 +81,16 @@ app.use("/api/alertas",   rutaAlertas);
 app.use("/api/admin",     rutaAdmin);
 app.use("/api/simulation", rutaSimulacion);
 app.use("/api/publico",   rutaPublico);
+
+// ── Frontend compilado (producción): lo sirve este mismo servidor, sin CORS ni proxy ──
+const carpetaWeb = process.env.FRONTEND_DIST ?? path.resolve(__dirname, "../public");
+if (fs.existsSync(path.join(carpetaWeb, "index.html"))) {
+  app.use(express.static(carpetaWeb, { maxAge: "1h", index: false }));
+  // Las rutas de la SPA (/alertas, /ciudadano...) devuelven index.html; la API conserva su 404 JSON.
+  app.get(/^\/(?!api\/|socket\.io\/).*/, (_req: Request, res: Response) => {
+    res.sendFile(path.join(carpetaWeb, "index.html"));
+  });
+}
 
 // ── Manejo de errores ─────────────────────────────────────────────────────────
 app.use((_req: Request, res: Response) => {
