@@ -35,6 +35,8 @@ const servidorHttp = createServer(app);
 // El frontend se sirve desde este mismo servidor en producción: la CSP deja pasar lo que usa la web
 // (mapa de OpenStreetMap, tipografías de Google y WebSocket al mismo origen).
 app.use(helmet({
+  // OpenStreetMap bloquea los mapas que no envían el origen (Referer); con no-referrer (valor por defecto) mostraba "Access blocked".
+  referrerPolicy: { policy: "strict-origin-when-cross-origin" },
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
